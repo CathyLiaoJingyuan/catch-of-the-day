@@ -5,12 +5,10 @@ class StorePicker extends React.Component {
   constructor(props) {
     super(props);
     this.goToStore = this.goToStore.bind(this);
-    // this.myInput = this.myInput.bind(this);
   }
 
   myInput = React.createRef();
 
-  goToStoremyInput = React.createRef();
   render() {
     return (
       <Fragment>

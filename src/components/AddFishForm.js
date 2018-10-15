@@ -1,30 +1,61 @@
 import React from "react";
-import { DH_NOT_SUITABLE_GENERATOR } from "constants";
 
 class AddFishForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.addFishForm = this.addFishForm.bind(this);
-    this.state = {
-      formList: []
+  createFish = this.createFish.bind(this);
+
+  nameRef = React.createRef();
+  priceRef = React.createRef();
+  statusRef = React.createRef();
+  descRef = React.createRef();
+  imageRef = React.createRef();
+
+  createFish(e) {
+    //stop the form from submitting
+    e.preventDefault();
+    const fish = {
+      name: this.nameRef.value.value,
+      price: parseFloat(this.priceRef.value.value),
+      status: this.statusRef.value.value,
+      desc: this.descRef.value.value,
+      image: this.imageRef.value.value
     };
+    this.props.addFish(fish);
+    //refresh the form
+    e.target.reset();
   }
 
-  addFishForm() {
-    console.log("hi");
-  }
   render() {
     return (
       <div>
-        <form className="fish-edit" onSubmit={this.addFishForm}>
-          <input name="name" type="text" placeholder="Name" />
-          <input name="price" type="text" placeholder="Price" />
-          <select name="status" type="text" placeholder="Status">
+        <form className="fish-edit" onSubmit={this.createFish}>
+          <input
+            name="name"
+            ref={this.nameRef}
+            type="text"
+            placeholder="Name"
+          />
+          <input
+            name="price"
+            ref={this.priceRef}
+            type="text"
+            placeholder="Price"
+          />
+          <select
+            name="status"
+            ref={this.statusRef}
+            type="text"
+            placeholder="Status"
+          >
             <option value="available">Fresh!</option>
             <option value="unavalable">Sold Out!</option>
           </select>
-          <textarea name="desc" placeholder="Desc" />
-          <input name="image" type="text" placeholder="Image" />
+          <textarea name="desc" ref={this.descRef} placeholder="Desc" />
+          <input
+            name="image"
+            ref={this.imageRef}
+            type="text"
+            placeholder="Image"
+          />
           <button type="submit">+ Add Fish</button>
         </form>
       </div>
