@@ -16,6 +16,7 @@ class App extends React.Component {
     this.addFish = this.addFish.bind(this);
     this.loadSampleFishes = this.loadSampleFishes.bind(this);
     this.addToOrder = this.addToOrder.bind(this);
+    this.updateFish = this.updateFish.bind(this);
   }
   componentDidMount() {
     const { params } = this.props.match;
@@ -64,6 +65,17 @@ class App extends React.Component {
     });
   };
 
+  updateFish = (key, updateFish) => {
+    // take a copy of state
+    const fishes = { ...this.state.fishes };
+    //add to order or update the numebr
+    fishes[key] = updateFish;
+    // call setState to update state object
+    this.setState({
+      fishes
+    });
+    console.log(key);
+  };
   render() {
     return (
       <div className="catch-of-the-day">
@@ -84,7 +96,9 @@ class App extends React.Component {
         {/* <Order {...this.state} /> */}
 
         <Inventory
+          fishes={this.state.fishes}
           addFish={this.addFish}
+          updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
         />
       </div>
