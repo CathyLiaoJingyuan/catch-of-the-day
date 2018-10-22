@@ -17,6 +17,7 @@ class App extends React.Component {
     this.loadSampleFishes = this.loadSampleFishes.bind(this);
     this.addToOrder = this.addToOrder.bind(this);
     this.updateFish = this.updateFish.bind(this);
+    this.deleteFish = this.deleteFish.bind(this);
   }
   componentDidMount() {
     const { params } = this.props.match;
@@ -48,6 +49,13 @@ class App extends React.Component {
     });
   }
 
+  deleteFish = key => {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = null;
+    this.setState({
+      fishes
+    });
+  };
   loadSampleFishes() {
     this.setState({
       fishes: sampleFishes
@@ -65,6 +73,13 @@ class App extends React.Component {
     });
   };
 
+  removeFromOrder = key => {
+    const order = { ...this.state.order };
+    delete order[key];
+    this.setState({
+      order
+    });
+  };
   updateFish = (key, updateFish) => {
     // take a copy of state
     const fishes = { ...this.state.fishes };
@@ -92,7 +107,11 @@ class App extends React.Component {
             ))}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} />
+        <Order
+          fishes={this.state.fishes}
+          order={this.state.order}
+          removeFromOrder={this.removeFromOrder}
+        />
         {/* <Order {...this.state} /> */}
 
         <Inventory
@@ -100,6 +119,7 @@ class App extends React.Component {
           addFish={this.addFish}
           updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
+          deleteFish={this.deleteFish}
         />
       </div>
     );
